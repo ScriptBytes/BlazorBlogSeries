@@ -1,0 +1,13 @@
+<div class="flex gap-4">
+    <div>Jeff F</div>
+    <div>@PublishDate.ToShortDateString()</div>
+    <div>@CategoryType</div>
+</div>
+
+@code {
+    [Parameter]
+    public DateTime PublishDate { get; set; }
+    
+    [Parameter]
+    public string CategoryType { get; set; }
+}
