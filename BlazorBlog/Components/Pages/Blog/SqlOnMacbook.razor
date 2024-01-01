@@ -1,57 +1,50 @@
 @page "/run-sql-server-on-m1-or-m2-macbook"
 
+<PageTitle>Run SQL Server on M1 or M2 Macbook</PageTitle>
+
 <div class="grid grid-cols-1 lg:grid-cols-3 mt-6">
     <div class="lg:col-span-2">
-        <h1 class="text-3xl text-gray-600 py-4">Run SQL Server on M1 or M2 Macbook</h1>
-        <Heading Type="Heading.HeadingType.H1">
-            <div>Hello again</div>
-        </Heading>
+        <Heading Type="Heading.HeadingType.H1">Run SQL Server on M1 or M2 Macbook</Heading>
         
         <PostInfo CategoryType="Docker" PublishDate="@DateTime.Now"></PostInfo>
         
         <img class="py-4" 
             src="images/GuyOnLedge.webp" alt="Guy on Ledge of Rock" />
         
-        <div>
+        <Paragraph>
             Did you know that it’s possible to run SQL Server on your M1 or M2 Macbook? 
             Well it is…sort of. Microsoft provides a docker image, which lets you run it on non-windows computers. 
             Unfortunately, they don’t provide an image using the ARM processor architecture, 
             but they do provide a lighter version of SQL Server called SQL Edge, and it does support ARM. 
             I’m going to show you how to run this version of SQL Server on your M1 or M2 ARM Mac.
-        </div>
+        </Paragraph>
+        <Paragraph>
+            Test of the code block:
+        </Paragraph>
+        <CodeBlock>@dockerRun</CodeBlock>
         
-        <h2 class="text-2xl text-gray-600 py-4">Pull SQL Edge Docker Image</h2>
+        <Heading Type="Heading.HeadingType.H2">This is a heading</Heading>
         
-        <div>
-            The first thing you need to do is pull the docker image for SQL Edge. 
-            I’m assuming you already have Docker installed.
-        </div>
+        <Paragraph>Showing the power of Render Fragments with ul/li inside Paragraph:</Paragraph>
         
-        <a>Here is a link to the Docker Hub page for SQL Edge for reference.</a>
-        
-        <div>
-            Pull the image by opening up a terminal and running the command 
-            <span class="bg-gray-300">docker pull mcr.microsoft.com/azure-sql-edge</span>
-        </div>
-        
-        <h2 class="text-2xl text-gray-600 py-4">Run SQL Edge Container</h2>
+        <Paragraph>
+            <ul class="ml-10 list-disc">
+                <li>–cap-add SYS_PTRACE – here is Microsoft’s note on this line: 
+                    The --cap-add SYS_PTRACE flag is required for non-root SQL Server containers 
+                    to generate dumps for troubleshooting purposes.</li>
+                <li>
+                    -e ‘ACCEPT_EULA=1’ is an environment variable, 
+                    which is saying that we will accept the End User License Agreement.
+                </li>
+            </ul>
+        </Paragraph>
     </div>
-    <div class="p-4">
-        <div>
-            Connect with us!
-        </div>
-        <div class="py-4">
-            Related or Recent
-        </div>
-        <div>
-            Recent Post Run SQL Server on M1 or M2 Macbook
-        </div>
-        <div>
-            Run a Postgres Database for Free on Google Cloud
-        </div>
+    <div class="pl-6 pt-12 lg:pt-4">
+        <ConnectWithUs></ConnectWithUs>
+        <RecentRelated></RecentRelated>
     </div>
 </div>
 
 @code {
-    
+    private string dockerRun = @"docker run --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=yourStrong(!)Password' -p 1433:1433 --name azuresqledge -d mcr.microsoft.com/azure-sql-edge";
 }

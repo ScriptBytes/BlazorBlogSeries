@@ -1,7 +1,14 @@
 ﻿@page "/"
+@attribute [StreamRendering]
 
-<PageTitle>Home</PageTitle>
+<div>@Message</div>
 
-<h1 class="text-blue-800 text-xl">Hello, world!</h1>
-
-Welcome to your new app.
+@code
+{
+    private string Message { get; set; } = "Loading...";
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(2000);
+        Message = "Hello world!";
+    }
+}

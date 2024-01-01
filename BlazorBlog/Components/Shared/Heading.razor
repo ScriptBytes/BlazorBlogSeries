@@ -11,10 +11,6 @@
         break;
 }
 
-<div>
-    Test Content: @TestContent
-</div>
-
 @code {
     public enum HeadingType
     {
@@ -28,7 +24,4 @@
     
     [Parameter]
     public RenderFragment ChildContent { get; set; }
-    
-    [Parameter]
-    public RenderFragment TestContent { get; set; }
 }
