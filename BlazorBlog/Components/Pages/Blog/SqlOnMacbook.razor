@@ -1,5 +1,5 @@
 @page "/run-sql-server-on-m1-or-m2-macbook"
-
+<PageScript Src="./Components/Pages/Blog/SqlOnMacbook.razor.js" />
 <PageTitle>Run SQL Server on M1 or M2 Macbook</PageTitle>
 
 <div class="grid grid-cols-1 lg:grid-cols-3 mt-6">
@@ -12,16 +12,16 @@
             src="images/GuyOnLedge.webp" alt="Guy on Ledge of Rock" />
         
         <Paragraph>
-            Did you know that it’s possible to run SQL Server on your M1 or M2 Macbook? 
-            Well it is…sort of. Microsoft provides a docker image, which lets you run it on non-windows computers. 
-            Unfortunately, they don’t provide an image using the ARM processor architecture, 
-            but they do provide a lighter version of SQL Server called SQL Edge, and it does support ARM. 
+            Did you know that it’s possible to run SQL Server on your M1 or M2 Macbook?
+            Well it is…sort of. Microsoft provides a docker image, which lets you run it on non-windows computers.
+            Unfortunately, they don’t provide an image using the ARM processor architecture,
+            but they do provide a lighter version of SQL Server called SQL Edge, and it does support ARM.
             I’m going to show you how to run this version of SQL Server on your M1 or M2 ARM Mac.
         </Paragraph>
         <Paragraph>
             Test of the code block:
         </Paragraph>
-        <CodeBlock>@dockerRun</CodeBlock>
+        <CodeBlock>@migrations</CodeBlock>
         
         <Heading Type="Heading.HeadingType.H2">This is a heading</Heading>
         
@@ -46,5 +46,29 @@
 </div>
 
 @code {
-    private string dockerRun = @"docker run --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=yourStrong(!)Password' -p 1433:1433 --name azuresqledge -d mcr.microsoft.com/azure-sql-edge";
+    private string migrations = @"public partial class InitialMigration : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: ""Todos"",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: ""int"", nullable: false)
+                        .Annotation(""SqlServer:Identity"", ""1, 1""),
+                    Completed = table.Column<bool>(type: ""bit"", nullable: false),
+                    Description = table.Column<string>(type: ""nvarchar(max)"", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey(""PK_Todos"", x => x.Id);
+                });
+        }
+ 
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: ""Todos"");
+        }
+    }";
 }

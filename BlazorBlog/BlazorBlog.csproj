@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BlazorBlog.Client\BlazorBlog.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0" />
+    <ProjectReference Include="..\BlazorBlogLibrary\BlazorBlogLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>
