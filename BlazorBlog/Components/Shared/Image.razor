@@ -1,0 +1,8 @@
+@using BlazorBlog.Data.Entities
+<img class="py-4" 
+            src="@ImageBlock.ImageUrl" alt="@ImageBlock.AltText" />
+
+@code {
+    [Parameter]
+    public ImageBlock ImageBlock { get; set; }
+}

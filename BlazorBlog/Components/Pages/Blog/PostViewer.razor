@@ -1,0 +1,114 @@
+@page "/test/{slug}"
+@using BlazorBlog.Data.Entities
+@using BlazorBlog.Core
+<PageScript Src="./Components/Pages/Blog/PostViewer.razor.js" />
+<div class="grid grid-cols-1 lg:grid-cols-3 mt-6">
+    <div class="lg:col-span-2">
+        @foreach (var block in Post.Blocks)
+        {
+            switch (block.BlockType)
+            {
+                case Constants.BlockTypes.Heading:
+                    <Heading HeadingBlock="(HeadingBlock)block"></Heading>
+                    break;
+                case Constants.BlockTypes.Paragraph:
+                    <Paragraph ParagraphBlock="(ParagraphBlock)block"></Paragraph>
+                    break;
+                case Constants.BlockTypes.Code:
+                    <Code CodeBlock="(CodeBlock)block"></Code>
+                    break;
+                case Constants.BlockTypes.Image:
+                    <Image ImageBlock="(ImageBlock)block"></Image>
+                    break;
+            }
+        }
+    </div>
+    <div class="pl-6 pt-12 lg:pt-4">
+        <ConnectWithUs></ConnectWithUs>
+        <RecentRelated></RecentRelated>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Slug { get; set; }
+
+    private BlogPost Post;
+
+    protected override void OnInitialized()
+    {
+        Post = new BlogPost()
+        {
+            Author = new Author() { Name = "Jeff" },
+            Blocks = new List<Block>(),
+            CoverImageUrl = "images/GuyOnLedge.webp",
+            DateCreated = DateTime.Now,
+            Status = "Pending",
+            Title = "How to Make a Blog",
+            UrlSlug = "how-to-make-a-blog"
+        };
+        
+        Post.Blocks.Add(new HeadingBlock()
+        {
+            Content = Post.Title,
+            BlockType = Constants.BlockTypes.Heading,
+            Order = 0,
+            Level = Constants.Levels.Level1
+        });
+        
+        Post.Blocks.Add(new ParagraphBlock()
+        {
+            BlockType = Constants.BlockTypes.Paragraph,
+            Content = "This is a really simple block. Does it render?",
+            Order = 1
+        });
+        
+        Post.Blocks.Add(new ParagraphBlock()
+        {
+            BlockType = Constants.BlockTypes.Paragraph,
+            Content = "This is another really simple block. How does it look?!",
+            Order = 2
+        });
+        
+        Post.Blocks.Add(new ImageBlock()
+        {
+            BlockType = Constants.BlockTypes.Image,
+            ImageUrl = "images/GuyOnLedge.webp",
+            AltText = "This is alt text",
+            Caption = "Hello there...",
+            Order = 3
+        });
+        
+        Post.Blocks.Add(new CodeBlock()
+        {
+            BlockType = Constants.BlockTypes.Code,
+            Order = 4,
+            Content = @"public partial class InitialMigration : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: ""Todos"",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: ""int"", nullable: false)
+                        .Annotation(""SqlServer:Identity"", ""1, 1""),
+                    Completed = table.Column<bool>(type: ""bit"", nullable: false),
+                    Description = table.Column<string>(type: ""nvarchar(max)"", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey(""PK_Todos"", x => x.Id);
+                });
+        }
+ 
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: ""Todos"");
+        }
+    }"
+        });
+    }
+
+}

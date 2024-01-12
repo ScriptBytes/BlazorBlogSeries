@@ -1,0 +1,9 @@
+@using BlazorBlog.Data.Entities
+<pre class="bg-gray-100 p-6 leading-normal text-base overflow-x-scroll">
+    <code>@CodeBlock.Content</code>
+</pre>
+
+@code {
+    [Parameter]
+    public CodeBlock CodeBlock { get; set; }
+}

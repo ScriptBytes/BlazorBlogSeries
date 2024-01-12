@@ -1,8 +1,9 @@
+@using BlazorBlog.Data.Entities
 <p class="py-2">
-    @ChildContent
+    @ParagraphBlock.Content
 </p>
 
 @code {
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public ParagraphBlock ParagraphBlock { get; set; }
 }

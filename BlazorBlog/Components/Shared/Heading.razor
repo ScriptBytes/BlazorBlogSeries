@@ -1,27 +1,19 @@
-@switch(Type)
+@using BlazorBlog.Data.Entities
+@using BlazorBlog.Core
+@switch(HeadingBlock.Level)
 {
-    case HeadingType.H1:
-        <h1 class="text-3xl text-gray-600 py-4">@ChildContent</h1>
+    case Constants.Levels.Level1:
+        <h1 class="text-3xl text-gray-600 py-4">@HeadingBlock.Content</h1>
         break;
-    case HeadingType.H2:
-        <h2 class="text-2xl text-gray-600 py-4">@ChildContent</h2>
+    case Constants.Levels.Level2:
+        <h2 class="text-2xl text-gray-600 py-4">@HeadingBlock.Content</h2>
         break;
-    case HeadingType.H3:
-        <h3 class="text-2xl text-gray-600 py-4">@ChildContent</h3>
+    case Constants.Levels.Level3:
+        <h3 class="text-2xl text-gray-600 py-4">@HeadingBlock.Content</h3>
         break;
 }
 
 @code {
-    public enum HeadingType
-    {
-        H1,
-        H2,
-        H3
-    }
-    
     [Parameter]
-    public HeadingType Type { get; set; } = HeadingType.H1;
-    
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public HeadingBlock HeadingBlock { get; set; }
 }
