@@ -1,0 +1,5 @@
+services:
+  blazorblog:
+    build: .
+    ports:
+      - "5006:8080"
